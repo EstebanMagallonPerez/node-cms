@@ -1,39 +1,65 @@
-var component ={
-	fetch:function(componentUrl,callback)
-	{
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function()
-		{
-			if (this.readyState == 4 && this.status == 200)
-			{
-				var response = {};
-				response.data = xhttp.responseText.split("${");
-				response.variableNames = []
-				for(var i = 1; i < response.data.length;i++)
-				{
-					var index = response.data[i].indexOf("}");
-					if(index > -1)
-					{
-						response.variableNames.push(response.data[i].substr(0,index));
-						response.data[i] = response.data[i].substr(index+1);
-					}else
-					{
-						response.error="NO CLOSING BRACE"
-					}
-				}
+var currentPage = location.href;
+document.addEventListener("click", function (e) {
 
-				callback(response);
-			}
-		};
-		var url = componentUrl+"/"+componentUrl.substr(componentUrl.lastIndexOf("/")+1)+".html";
-		xhttp.open("GET", url, true);
-		xhttp.send();
-	},
-	display:function(componentHTML)
+	if(e.target.hash == "")
 	{
-		var componentWrapper = document.createElement("div");
-		componentWrapper.innerHTML = componentHTML;
-		document.getElementsByTagName('body')[0].appendChild(componentWrapper);
+		//console.log("ajax page load");
+		if(e.target.href.indexOf(e.target.host) > 0)
+		{
+			let path = e.target.pathname;
+			if(path == "/")
+			{
+				path ="";
+			}
+			history.pushState(null, null, path);
+			loadPage(path);
+			e.preventDefault();
+			return false;
+		}else if ((e.target.hash != undefined))
+		{
+			//console.log("this is an external link");
+		}
+	}else if(e.target.hash != undefined)
+	{
+		//console.log("hash change");
+		location.hash = e.target.hash
+		//e.preventDefault();
 	}
 
-};
+});
+function loadPage(path)
+{
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			currentPage = path;
+			document.getElementById("landing").innerHTML = xhttp.responseText;
+		}
+	};
+
+	xhttp.open("GET", path, true);
+	xhttp.send();
+}
+window.addEventListener('popstate',function(event){
+	let path = event.target.location.pathname;
+	if(path == "/")
+	{
+		path ="";
+	}
+	var hasHash = event.target.location.href.indexOf("#") > -1;
+	if(hasHash)
+	{
+		if(event.target.location.pathname == currentPage)
+		{
+			return false;
+		}
+
+	}else if(currentPage == event.target.location.pathname)
+	{
+		return false;
+	}else
+	{
+		loadPage(path);
+	}
+
+},false)

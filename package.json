@@ -1,16 +1,15 @@
 {
-  "name": "node-cms",
+  "name": "node",
   "version": "1.0.0",
-  "description": "a content management system using nodejs and mongodb",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "mime-types": "^2.1.18",
-    "mongodb": "^3.0.6"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Esteban",
-  "license": "ISC"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mime-types": "^2.1.18",
+    "stream-stream": "^1.2.6"
+  }
 }

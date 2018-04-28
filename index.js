@@ -1,6 +1,6 @@
 const http = require('http');
-const port = 3000;
-var apache = require('./webModules/shittyApache');
+const port = 80;
+const apache = require('./webModules/shittyApache');
 
 const requestHandler = (request, response) => {
 	if (request.url == "/")

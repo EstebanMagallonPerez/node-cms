@@ -1,34 +1,6 @@
-var currentPage = location.href;
-document.addEventListener("click", function (e) {
-
-	if(e.target.hash == "")
-	{
-		//console.log("ajax page load");
-		if(e.target.href.indexOf(e.target.host) > 0)
-		{
-			let path = e.target.pathname;
-			if(path == "/")
-			{
-				path ="";
-			}
-			history.pushState(null, null, path);
-			loadPage(path);
-			e.preventDefault();
-			return false;
-		}else if ((e.target.hash != undefined))
-		{
-			//console.log("this is an external link");
-		}
-	}else if(e.target.hash != undefined)
-	{
-		//console.log("hash change");
-		location.hash = e.target.hash
-		//e.preventDefault();
-	}
-
-});
-function loadPage(path)
-{
+var currentPage =  location.href;
+function loadPage(path){
+	console.log("triggered ajax");
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -38,28 +10,60 @@ function loadPage(path)
 	};
 
 	xhttp.open("GET", path, true);
+	xhttp.setRequestHeader("ajax", "true");
 	xhttp.send();
 }
-window.addEventListener('popstate',function(event){
-	let path = event.target.location.pathname;
-	if(path == "/")
+var ajaxLoader = {
+	'init' : function()
 	{
-		path ="";
-	}
-	var hasHash = event.target.location.href.indexOf("#") > -1;
-	if(hasHash)
-	{
-		if(event.target.location.pathname == currentPage)
-		{
-			return false;
-		}
+		document.addEventListener("click", function (e) {
+			var sameSource = location.host == e.target.host;
+			if(e.target.hash == "" && sameSource)
+			{
+				//console.log("ajax page load");
+				let path = e.target.pathname;
+				if(path == "/")
+				{
+					path ="";
+				}
+				history.pushState(null, null, path);
+				loadPage(path);
+				e.preventDefault();
+				return false;
 
-	}else if(currentPage == event.target.location.pathname)
-	{
-		return false;
-	}else
-	{
-		loadPage(path);
-	}
+			}else if(e.target.hash != undefined && sameSource)
+			{
+				console.log("hash change");
+				//location.hash = e.target.hash
+			}else
+			{
+				console.log("external??");
+			}
+		});
+		window.addEventListener('popstate',function(event){
+			let path = event.target.location.pathname;
+			if(path == "/")
+			{
+				path ="";
+			}
+			var hasHash = event.target.location.href.indexOf("#") > -1;
+			var sameTarget = event.target.location.pathname == currentPage;
+			if(hasHash && sameTarget || sameTarget && !hasHash)
+			{
+				return false;
+			}else
+			{
+				loadPage(path);
+			}
 
-},false)
+		},false)
+	},
+
+}
+if(/bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent))
+{
+	console.log("Hello Bot, Im making things easy for you by enabling standard loading instead of ajax loading :)");
+}else
+{
+	ajaxLoader.init();
+}

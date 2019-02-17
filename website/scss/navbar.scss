@@ -1,4 +1,5 @@
 nav{
+    z-index: $nav-index;
 	width: 100%;
 	height: $nav-height;
 	position: fixed;
@@ -38,7 +39,6 @@ nav{
 					position: absolute;
 					left: 0px;
 					pointer-events: none;
-					z-index: 100000;
 				}
 			}
 		}
@@ -52,7 +52,6 @@ nav{
 			position: fixed;
 			left: -600px;
 			background: $background-color;
-			z-index: $top;
 			box-shadow: $box-shadow;
 			transition: left .4s;
 			&.active
@@ -80,7 +79,6 @@ nav{
 
 	.nav-toggle
 	{
-		z-index: 10000;
 		display: inline-block;
 		position: absolute;
 		right: 0px;
@@ -102,6 +100,5 @@ nav{
 		position: absolute;
 		left: 0px;
 		pointer-events: none;
-		z-index: 100000;
 	}
 }

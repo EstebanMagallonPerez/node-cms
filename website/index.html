@@ -1,7 +1,165 @@
-<div class="container">
-	<h1>index</h1>
-	Here is some content that goes within the body
-	<a href="/wrapper.html">click me</a>
-	<a href="#addhash">add hash</a>
-	<a href="https://stackoverflow.com/questions/15754859/how-to-set-id-using-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa">add hash</a>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<style>
+    html
+    {
+        font-family: 'Roboto', sans-serif;
+    }
+    .svg{
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: opacity .8s;
+    }
+    .svg.loaded{
+        opacity: 1;
+    }
+    .small
+    {
+        height: 290px;
+    }
+    .large{
+        height: 320px;
+    }
+    iframe{
+        border:none;
+        width: 100%;
+    }
+    .card>.footer{overflow: auto;}
+    .card>.footer>.button{float: right;}
+    .banner{
+        background-image: url(./cityviewbg.png);
+        background-position: center bottom;
+        background-repeat: no-repeat;
+
+    }
+    .banner-text h1{
+        padding-right: 100px;
+    }
+    .scrollTarget>h1{
+        padding-top: 55px
+    }
+</style>
+<div class="banner tertiary">
+    <div class="container banner-text">
+        <h1>Esteban Perez</h1>
+        <h3 style="text-align: right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"I am me" -me</h3>
+    </div>
 </div>
+<div class="content">
+    <div class="container" >
+        <div style="margin: 20px">
+            <h1>Why are you here?</h1>
+            <p>You could be here for a number of reasons, maybe you just stumbled upon this page, maybe you know me, or maybe you want to give me a job (Please be this one). It does not really matter how you got here because the only thing that matters is me. So whoever you are prepare to learn a little bit about why I matter, and some of the things I have done with my incredibly valuable time.
+                <br><br>
+                <a style="float: right" href="#machineLearning">What's wrong with you?</a>
+            </p>
+        </div>
+    </div>
+    <div class="tertiary">
+        <div class="container">
+            <div style="margin: 20px">
+                <h1 id="machineLearning">Machine Learning</h1>
+                <p>I spent a whole semester taking this class, and I didnt learn a thing... so why is this a section? Well some time after the class I decided to build a distributed learning tool. Lets see how it works.</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="scrollTarget container" id="pictures" >
+            <h1 style="margin: 0px 20px">Pretty Pictures</h1>
+        </div>
+        <div class="grid vertical-center fill container">
+            <div class="item xs-12 md-6 lg-8 xl-6">
+                <div class="card secondary">
+                    <div class="body">
+                        <iframe title="Activity Clock" class="large" scrolling="no" src="/svgs/activity.html"></iframe>
+                    </div>
+                    <div class="footer">
+                        <div>
+                            Made for a drone website for use as an animated Icon.
+                        </div>
+                        <a class="button primary" href="svgs/activity.html">View Fullscreen</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item xs-12 md-6 lg-4 xl-3">
+                <div class="card tertiary">
+                    <div class="body">
+                        <iframe title="earth" class="small" scrolling="no" src="/svgs/earth.html"></iframe>
+                    </div>
+                    <div class="footer">
+                        <div>
+                            Believe it or not, this is a clock. The moon is the hour, the rocketship represents the minutes, and the UFO represents the minutes.
+                        </div>
+                        <a class="button secondary" href="svgs/earth.html">View Fullscreen</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item xs-12 md-6 lg-6 xl-3">
+                <div class="card primary">
+                    <div class="body">
+                        <iframe title="clock" class="small" scrolling="no" src="/svgs/v2.html"></iframe>
+                    </div>
+                    <div class="footer">
+                        <div>
+                            Made for a drone website for use as an animated Icon.
+                        </div>
+                        <a class="button tertiary" href="svgs/v2.html">View Fullscreen</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item xs-12 md-6 lg-6 xl-3">
+                <div class="card tertiary">
+                    <div class="body">
+                        <iframe title="husky" class="small" scrolling="no" src="/svgs/husky.html"></iframe>
+                    </div>
+                    <div class="footer">
+                        <div>
+                            Believe it or not, this is a clock. The moon is the hour, the rocketship represents the minutes, and the UFO represents the minutes.
+                        </div>
+                        <a class="button secondary" href="svgs/husky.html">View Fullscreen</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item xs-12 md-6 lg-4 xl-3">
+                <div class="card primary">
+                    <div class="body">
+                        <iframe title="taco" class="small" scrolling="no" src="/svgs/taco.html"></iframe>
+                    </div>
+                    <div class="footer">
+                        <div>
+                            My Websites icon
+                        </div>
+                        <a class="button tertiary" href="svgs/taco.html">View Fullscreen</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item xs-12 md-6 lg-8 xl-6">
+                <div class="card secondary">
+                    <div class="body">
+                        <iframe title="drone" class="large" scrolling="no" src="/svgs/drone.html"></iframe>
+                    </div>
+                    <div class="footer">
+                        <div>
+                            Made for a drone website for use as an animated Icon.
+                        </div>
+                        <a class="button primary" href="svgs/drone.html">View Fullscreen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+                // registration failed :(
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+    }
+</script>
+<!--<script src="js/script.js"></script>-->

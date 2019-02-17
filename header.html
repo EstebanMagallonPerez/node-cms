@@ -1,47 +1,51 @@
-<!DOCTYPE html>
-<html>
-	<head>
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/scss/all.css">
+        <meta name="Description" content="One day I will be running for president. I am also a Perez... So this is Perezident.com">
+        <meta name="theme-color" content="#e24e42">
+        <link rel="manifest" href="/manifest.json">
+        <style>
+            .svg{
+                height: 100%;
+                width: 100%;
+                opacity: 0;
+                transition: opacity .8s;
+            }
+            .svg.loaded{
+                opacity: 1;
+            }
+            .small
+            {
+                height: 250px;
+            }
+            .large{
+                height: 320px;
+            }
+            iframe{
+                border:none;
+                width: 100%;
+            }
+            .card>.footer{overflow: auto;}
+            .card>.footer>.button{float: right;}
+        </style>
 
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title>My Site</title>
-		<link href="/css/style.css" rel="stylesheet" media="screen">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">Navbar</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Link</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Dropdown
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">Action</a>
-							<a class="dropdown-item" href="#">Another action</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</div>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link disabled" href="#">Disabled</a>
-					</li>
-				</ul>
-				<form class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-				</form>
-			</div>
-		</nav>
-		<div id="landing">
+        <title>Perezident</title>
+    </head>
+    <body>
+        <nav class="primary">
+            <div class="nav-menu">
+                <ul>
+                    <li><a href="/index.html" class="nav-item">Home</a></li>
+                    <li><a href="https://github.com/EstebanMagallonPerez?tab=repositories" class="nav-item">Projects</a></li>
+                    <li><a href="#about" class="nav-item">About</a></li>
+                    <li><a href="#donate" class="nav-item">Donate</a></li>
+                    <li><a href="#hello" href="#" class="button tertiary">hello</a></li>
+                </ul>
+            </div>
+            <div class="nav-toggle"></div>
+        </nav>
+        <div class="content">

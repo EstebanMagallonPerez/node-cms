@@ -1,11 +1,49 @@
 var fs = require('fs');
+var zlib = require('zlib');
 var ss = require('stream-stream');
 var mime = require('mime-types');
+var Readable = require('stream').Readable
 var websiteBase = "website";
+var ignoreBase = ["/svgs/"];
+
+
+function fillPage(fileName)
+{
+	var data = fs.readFileSync(fileName, "utf8");
+	/*
+    console.log(data);
+	var regex = /<\s*script.*id\s*=\s*"serverExec".*>/
+	var startval = regex.exec(data).index;
+	var after = data.substring(startval.index,data.length);
+	if(after != undefined)
+	{
+		console.log(after);
+		regex = /<\/\s*script\s*>/g;
+		console.log(regex.exec(after)[0]);
+		console.log(regex.exec(after)[0]);
+		var endval = regex.exec(after).index;
+		console.log(data.substr(startval,endval));
+		console.log(after.substr(after.indexOf(">"),after.match("").index));
+	}
+    */
+	return data;
+}
+
+
+
 
 exports.fetchFile = function (request, response) {
 	//prep the url with the directory on the server
-	//console.log(request);
+	var ignore = false;
+	for(var i = 0; i < ignoreBase.length;i++)
+	{
+		if(request.url.indexOf(ignoreBase[i]) == 0)
+		{
+			ignore = true;
+			break;
+		}
+	}
+
 	request.url = websiteBase+request.url;
 	fs.stat(request.url, function(err, stat) {
 		//check for errors and return the error page if any errors exist. This is you custom 404 page
@@ -23,35 +61,66 @@ exports.fetchFile = function (request, response) {
 			//This should allow a crawler to do its thing
 			var files = [];
 			var type = mime.lookup(request.url);
-			console.log("type is: ",type);
-			if(request.headers["referer"] == undefined && type == 'text/html' || request.headers.ajax == undefined && type == 'text/html')
+			if(!ignore &&request.headers["referer"] == undefined && type == 'text/html' || !ignore && request.headers.ajax == undefined && type == 'text/html')
 			{
 				var files = ['header.html', request.url,'footer.html'];
 				var stream = ss();
 
 				var fileSize = 0;
+				/*				for(let i = 0; i < files.length;i++)
+				{
+					console.log(files[i]);
+					stream.write(fs.createReadStream(files[i]));
+					fileSize = fs.statSync(files[i]).size;
+				}*/
+
+				let index = 0;
+                var output = "";
 				files.forEach(function(f) {
-					stream.write(fs.createReadStream(f));
-					fileSize += fs.statSync(f).size;
-					console.log(fileSize);
+
+
+						stream.write(fs.createReadStream(f));
+						fileSize += fs.statSync(f).size;
+
+					index++;
 				});
+                console.log(output);
 				stream.end();
+
 				response.writeHead(200, {
 					'Content-Type': 'text/html',
-					'Content-Length': fileSize
+					'Content-Length': fileSize,
+                    'Content-Encoding': 'gzip'
 				});
-				//write the file size here
-				stream.pipe(response);
+				stream.pipe(zlib.createGzip()).pipe(response);
 				return;
 			}else
 			{
-				response.writeHead(200, {
+                var type = mime.lookup(request.url);
+                var headerDetails = {
 					'Content-Type': mime.lookup(request.url),
-					'Content-Length': stat.size
-				});
-				console.log(request.url);
-				var readStream = fs.createReadStream(request.url);
-				readStream.pipe(response);
+					'Content-Length': stat.size,
+                    'Cache-Control': 'max-age=86400'
+				}
+                if(type == "text/html")
+                {
+                    headerDetails['Content-Encoding'] = 'gzip'
+                }
+				response.writeHead(200, headerDetails);
+                var readStream = fs.createReadStream(request.url);
+				//console.log(request.url);
+				if(type == "text/html")
+                {
+                    //console.log(mime.lookup(request.url));
+                    //console.log("zipping");
+                    readStream.pipe(zlib.createGzip()).pipe(response);
+                }else
+                {
+                    //console.log(mime.lookup(request.url));
+                    //console.log("not zipping");
+                    readStream.pipe(response);
+                }
+
 			}
 		} else {
 			console.log('Some other error: ', err.code);

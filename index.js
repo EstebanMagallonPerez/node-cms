@@ -1,5 +1,5 @@
 const http = require('http');
-const port = 80;
+const port = 8080;
 const apache = require('./webModules/shittyApache');
 
 const requestHandler = (request, response) => {
